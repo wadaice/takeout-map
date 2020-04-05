@@ -1,156 +1,110 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title>sheet2gmap</title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="1348.17">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #000000; -webkit-text-stroke: #e3e3e3}
-    span.s1 {font-kerning: none}
-    span.s2 {font: 14.0px 'Hiragino Kaku Gothic ProN'; font-kerning: none}
-  </style>
-</head>
-<body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;head&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta charset="utf-8"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;title&gt;sheet2gmap&lt;/title&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;style&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>#map {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>height: 100%;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>html, body {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>height: 100%;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>margin: 0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>padding: 0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>#sidebar {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>position: absolute;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>top: 10%;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>left: 72%;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>width: 25%;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>height: 40%;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border: 1px solid #666;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>padding: 6px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background-color: white;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-family: Meriyo UI;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 14px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/head&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;body&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="map"&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;td&gt;&lt;div id="sidebar"&gt;&lt;/div&gt;&lt;/td&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="constants.js"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://maps.googleapis.com/maps/api/js?language=ja&amp;region=JP&amp;key=AIzaSyDeCllRvHPeD_ctg6eU5MrEqkQkPJhePUk&amp;callback=initMap" async defer&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>var map;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>var marker = [];</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>var infoWindow = [];</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>var windowOpened;</span></p>
-<p class="p1"><span class="s1"><br>
-</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>function parseData(data) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>var keys = data.values[0];</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>var markerData = [];</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>data.values.forEach(function(value, i) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>if (i &gt; 0) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>var hash = {};</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>value.forEach(function(d, j) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>hash[keys[j]] = d;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>markerData.push(hash);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>return markerData;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><br>
-</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>function initMap() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>var target = document.getElementById('map');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>var centerp = {lat: 35.6679191, lng: 139.4606805};</span></p>
-<p class="p1"><span class="s1"><br>
-</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>map = new google.maps.Map(target, {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>center: centerp,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>zoom: 7,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
-<p class="p1"><span class="s1"><br>
-</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>var request = new XMLHttpRequest();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>request.open('GET', `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/sheet1?key=${API_KEY}`, true);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>request.responseType = 'json';</span></p>
-<p class="p1"><span class="s1"><br>
-</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>request.onload = function () {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>var data = this.response;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>var markerData = parseData(data);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>setData(markerData);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>};</span></p>
-<p class="p1"><span class="s1"><br>
-</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>request.send();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><br>
-</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>function addMarker(i, data) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>var markerLatLng = new google.maps.LatLng({</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>lat: Number(data['</span><span class="s2">緯度</span><span class="s1">']),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>lng: Number(data['</span><span class="s2">経度</span><span class="s1">'])</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>marker[i] = new google.maps.Marker({</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>position: markerLatLng,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>map: map</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
-<p class="p1"><span class="s1"><br>
-</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>var info = '&lt;div style="font-size:18px;font-weight:bold;margin-bottom:10px;"&gt;' + data['</span><span class="s2">名称</span><span class="s1">'] + '&lt;/div&gt;';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>infoWindow[i] = new google.maps.InfoWindow({</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>content: info</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
-<p class="p1"><span class="s1"><br>
-</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>markerEvent(i);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><br>
-</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>function setData(markerData){</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>var sidebar_html = "";</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>for (var i = 0; i &lt; markerData.length; i++) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>var latitude = markerData[i]['</span><span class="s2">緯度</span><span class="s1">'];</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>if (!latitude) { continue; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>addMarker(i, markerData[i]);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>var name = markerData[i]['</span><span class="s2">名称</span><span class="s1">'];</span></p>
-<p class="p1"><span class="s1"><br>
-</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>sidebar_html += `&lt;b&gt;${i + 1}&lt;/b&gt; &lt;a href="javascript:openWindow(${i})"&gt;${name}&lt;\/a&gt;&lt;br /&gt;`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><br>
-</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>document.getElementById("sidebar").innerHTML = `&lt;a target="_blank" href="https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit?usp=sharing"&gt;</span><span class="s2">元データ</span><span class="s1">(Google </span><span class="s2">スプレッドシート</span><span class="s1">)&lt;/a&gt;&lt;br /&gt;&lt;a target="_blank" href="https://github.com/champierre/sheet2gmap"&gt;</span><span class="s2">ソースコード</span><span class="s1">(GitHub)&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;` + sidebar_html;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><br>
-</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>function markerEvent(i) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>marker[i].addListener('click', function() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>openWindow(i);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><br>
-</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>function openWindow(i) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>if(windowOpened){</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>windowOpened.close();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>infoWindow[i].open(map, marker[i]);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>windowOpened = infoWindow[i];</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/body&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/html&gt;<br>
-</span></p>
-</body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>sheet2gmap</title>
+    <style>
+      #map {
+        height: 100%;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #sidebar {
+        position: absolute;
+        top: 10%;
+        left: 72%;
+        width: 25%;
+        height: 40%;
+        border: 1px solid #666;
+        padding: 6px;
+        background-color: white;
+        font-family: Meriyo UI;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <td><div id="sidebar"></div></td>
+    <script src="constants.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyDeCllRvHPeD_ctg6eU5MrEqkQkPJhePUk&callback=initMap" async defer></script>
+    <script>
+      var map;
+      var marker = [];
+      var infoWindow = [];
+      var windowOpened;
+      function parseData(data) {
+        var keys = data.values[0];
+        var markerData = [];
+        data.values.forEach(function(value, i) {
+          if (i > 0) {
+            var hash = {};
+            value.forEach(function(d, j) {
+              hash[keys[j]] = d;
+            });
+            markerData.push(hash);
+          }
+        });
+        return markerData;
+      }
+      function initMap() {
+        var target = document.getElementById('map');
+        var centerp = {lat: 35.6679191, lng: 139.4606805};
+        map = new google.maps.Map(target, {
+          center: centerp,
+          zoom: 7,
+        });
+        var request = new XMLHttpRequest();
+        request.open('GET', `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/sheet1?key=${API_KEY}`, true);
+        request.responseType = 'json';
+        request.onload = function () {
+          var data = this.response;
+          var markerData = parseData(data);
+          setData(markerData);
+        };
+        request.send();
+      }
+      function addMarker(i, data) {
+        var markerLatLng = new google.maps.LatLng({
+          lat: Number(data['緯度']),
+          lng: Number(data['経度'])
+        });
+        marker[i] = new google.maps.Marker({
+          position: markerLatLng,
+          map: map
+        });
+        var info = '<div style="font-size:18px;font-weight:bold;margin-bottom:10px;">' + data['名称'] + '</div>';
+        infoWindow[i] = new google.maps.InfoWindow({
+          content: info
+        });
+        markerEvent(i);
+      }
+      function setData(markerData){
+        var sidebar_html = "";
+        for (var i = 0; i < markerData.length; i++) {
+          var latitude = markerData[i]['緯度'];
+          if (!latitude) { continue; }
+          addMarker(i, markerData[i]);
+          var name = markerData[i]['名称'];
+          sidebar_html += `<b>${i + 1}</b> <a href="javascript:openWindow(${i})">${name}<\/a><br />`;
+        }
+        document.getElementById("sidebar").innerHTML = `<a target="_blank" href="https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit?usp=sharing">元データ(Google スプレッドシート)</a><br /><a target="_blank" href="https://github.com/champierre/sheet2gmap">ソースコード(GitHub)</a><br /><br />` + sidebar_html;
+      }
+      function markerEvent(i) {
+        marker[i].addListener('click', function() {
+          openWindow(i);
+        });
+      }
+      function openWindow(i) {
+        if(windowOpened){
+          windowOpened.close();
+        }
+        infoWindow[i].open(map, marker[i]);
+        windowOpened = infoWindow[i];
+      }
+    </script>
+  </body>
 </html>
