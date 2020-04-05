@@ -23,6 +23,7 @@
         background-color: white;
         font-family: Meriyo UI;
         font-size: 14px;
+        overflow: auto;
       }
     </style>
   </head>
@@ -52,10 +53,10 @@
       }
       function initMap() {
         var target = document.getElementById('map');
-        var centerp = {lat: 35.6679191, lng: 139.4606805};
+        var centerp = {lat: 35.319904, lng: 139.541046};
         map = new google.maps.Map(target, {
           center: centerp,
-          zoom: 7,
+          zoom: 15,
         });
         var request = new XMLHttpRequest();
         request.open('GET', `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/sheet1?key=${API_KEY}`, true);
@@ -91,7 +92,7 @@
           var name = markerData[i]['名称'];
           sidebar_html += `<b>${i + 1}</b> <a href="javascript:openWindow(${i})">${name}<\/a><br />`;
         }
-        document.getElementById("sidebar").innerHTML = `<a target="_blank" href="https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit?usp=sharing">元データ(Google スプレッドシート)</a><br /><a target="_blank" href="https://github.com/champierre/sheet2gmap">ソースコード(GitHub)</a><br /><br />` + sidebar_html;
+      document.getElementById("sidebar").innerHTML = sidebar_html;
       }
       function markerEvent(i) {
         marker[i].addListener('click', function() {
